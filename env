@@ -1,6 +1,6 @@
 APP_NAME=Laravel
 APP_ENV=production
-APP_KEY=
+APP_KEY=base64:qOLNl3uRWrXx1XgJbuwYgZPl7Kq0XvUp2r97AMRjU9c=
 APP_DEBUG=false
 APP_URL=https://eventogestor.onrender.com
 
