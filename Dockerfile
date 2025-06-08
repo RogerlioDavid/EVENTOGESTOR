@@ -24,7 +24,13 @@ WORKDIR /var/www/html
 # Instalar dependencias de Laravel
 RUN composer install --no-interaction --prefer-dist --optimize-autoloader
 
-# Generar clave de aplicación
+# Generar APP_KEY si no existe
+RUN echo '#!/bin/bash\\n'\\
+'if ! grep -q "APP_KEY=" .env || grep -q "APP_KEY=$" .env; then\\n'\\
+'  php artisan key:generate\\n'\\
+'fi\\n' > /entrypoint.sh && chmod +x /entrypoint.sh
+
+ENTRYPOINT ["/entrypoint.sh"]
 
 # Configurar Apache para servir desde /public
 RUN sed -i 's|DocumentRoot /var/www/html|DocumentRoot /var/www/html/public|' /etc/apache2/sites-available/000-default.conf
