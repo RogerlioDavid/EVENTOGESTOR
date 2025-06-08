@@ -1,0 +1,1 @@
+import{_ as o}from"./_plugin-vue_export-helper-DlAUqK2U.js";import{f as s,o as n,b as t}from"./app-CG3aEnuC.js";const r={},a={class:"p-4 text-blue-700"};function c(l,e){return n(),s("div",a,e[0]||(e[0]=[t("h1",{class:"text-2xl font-bold"},"Bienvenido, Organizador",-1),t("p",null,"Este es tu panel de eventos.",-1)]))}const f=o(r,[["render",c]]);export{f as default};

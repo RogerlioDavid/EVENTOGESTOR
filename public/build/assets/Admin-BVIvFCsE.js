@@ -1,0 +1,1 @@
+import{_ as n}from"./_plugin-vue_export-helper-DlAUqK2U.js";import{f as s,o,b as t}from"./app-CG3aEnuC.js";const r={},a={class:"p-4 text-green-700"};function c(i,e){return o(),s("div",a,e[0]||(e[0]=[t("h1",{class:"text-2xl font-bold"},"Bienvenido, Admin",-1),t("p",null,"Este es tu panel de administración.",-1)]))}const f=n(r,[["render",c]]);export{f as default};
