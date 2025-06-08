@@ -1,6 +1,16 @@
 <?php
 
 use Illuminate\Support\Str;
+if (env('APP_ENV') === 'production') {
+    // Forzar la conexión MySQL con variables de entorno en producción
+    config([
+        'database.default' => 'mysql',
+        'database.connections.mysql.host' => env('DB_HOST'),
+        'database.connections.mysql.database' => env('DB_DATABASE'),
+        'database.connections.mysql.username' => env('DB_USERNAME'),
+        'database.connections.mysql.password' => env('DB_PASSWORD'),
+    ]);
+}
 
 return [
 
