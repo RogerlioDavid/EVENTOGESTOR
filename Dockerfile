@@ -24,9 +24,13 @@ WORKDIR /var/www/html
 # Instalar dependencias de Laravel
 RUN composer install --no-interaction --prefer-dist --optimize-autoloader
 
-# Configurar Apache para Laravel
+# Configurar Apache para que sirva desde /public
+RUN sed -i 's|DocumentRoot /var/www/html|DocumentRoot /var/www/html/public|' /etc/apache2/sites-available/000-default.conf
+
+# Habilitar .htaccess para Laravel
 RUN echo "<Directory /var/www/html/public>\n\
     AllowOverride All\n\
+    Require all granted\n\
 </Directory>" >> /etc/apache2/apache2.conf
 
 EXPOSE 80
