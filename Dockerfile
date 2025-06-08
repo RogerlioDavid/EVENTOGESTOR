@@ -18,20 +18,6 @@ RUN chown -R www-data:www-data /var/www/html \
 # Habilitar mod_rewrite
 RUN a2enmod rewrite
 
-# Establecer el directorio de trabajo
-WORKDIR /var/www/html
-
-# Instalar dependencias de Laravel
-RUN composer install --no-interaction --prefer-dist --optimize-autoloader
-
-# Generar APP_KEY si no existe
-RUN echo '#!/bin/bash\\n'\\
-'if ! grep -q "APP_KEY=" .env || grep -q "APP_KEY=$" .env; then\\n'\\
-'  php artisan key:generate\\n'\\
-'fi\\n' > /entrypoint.sh && chmod +x /entrypoint.sh
-
-ENTRYPOINT ["/entrypoint.sh"]
-
 # Configurar Apache para servir desde /public
 RUN sed -i 's|DocumentRoot /var/www/html|DocumentRoot /var/www/html/public|' /etc/apache2/sites-available/000-default.conf
 
@@ -41,7 +27,22 @@ RUN echo "<Directory /var/www/html/public>\n\
     Require all granted\n\
 </Directory>" >> /etc/apache2/apache2.conf
 
+# Establecer el directorio de trabajo
+WORKDIR /var/www/html
+
+# Instalar dependencias de Laravel
+RUN composer install --no-interaction --prefer-dist --optimize-autoloader
+
+# Crear el script de entrypoint para generar la APP_KEY si falta
+RUN printf '#!/bin/bash\n\
+if ! grep -q "^APP_KEY=" .env || grep -q "^APP_KEY=$" .env; then\n\
+  php artisan key:generate\n\
+fi\n\
+exec "$@"\n' > /entrypoint.sh \
+    && chmod +x /entrypoint.sh
+
+ENTRYPOINT ["/entrypoint.sh"]
+
 EXPOSE 80
+
 CMD ["apache2-foreground"]
-
-
