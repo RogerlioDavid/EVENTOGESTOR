@@ -13,9 +13,8 @@ if (file_exists($maintenance = __DIR__.'/../storage/framework/maintenance.php'))
 // Register the Composer autoloader...
 require __DIR__.'/../vendor/autoload.php';
 
-// DEBUG: Ver qué conexión DB está leyendo Laravel
-var_dump(env('DB_CONNECTION'));
-die;
+// DEBUG: Mostrar conexión DB sin detener el script
+echo '<pre>DB_CONNECTION = ' . env('DB_CONNECTION') . "</pre>\n";
 
 // Bootstrap Laravel and handle the request...
 /** @var Application $app */
