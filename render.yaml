@@ -1,0 +1,19 @@
+services:
+  - type: web
+    name: eventogestor
+    env: docker
+    plan: free
+    branch: main
+    region: oregon
+    dockerfilePath: Dockerfile
+    buildFilter:
+      paths: ["Dockerfile", "**/*.php", "**/*.env", "**/*.json"]
+    envVars:
+      - key: APP_ENV
+        value: production
+      - key: APP_DEBUG
+        value: false
+      - key: APP_KEY
+        sync: false
+      - key: DB_CONNECTION
+        value: sqlite
